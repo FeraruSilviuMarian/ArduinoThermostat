@@ -56,9 +56,10 @@ namespace ArduinoThermostat
         {
             InitializeComponent();
             Init_form(); // form defaults before reading data
-            getAvailableComPorts();
+            MessageBox.Show("The app will start when you connect your arduino to an USB port");
             while (!portFound)
             {
+                getAvailableComPorts();
                 DetectPort();
             }
             ConnectToArduino();
@@ -93,7 +94,7 @@ namespace ArduinoThermostat
 
         private void ConnectToArduino()
         {
-            if (!isConnected)
+            if (!isConnected && portFound)
             {
                 port = new SerialPort(arduinoPortName, 9600, Parity.None, 8, StopBits.One);
                 port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
