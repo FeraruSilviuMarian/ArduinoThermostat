@@ -57,7 +57,6 @@ namespace ArduinoThermostat
         {
             InitializeComponent();
             Init_form(); // form defaults before reading data
-            //MessageBox.Show("The app will start when you connect your arduino to an USB port");
 
             Thread HandshakeArduino = new Thread(DetectPort);
             HandshakeArduino.Start();
