@@ -26,6 +26,10 @@ namespace ArduinoThermostat
         Color color_25_30_c = Color.FromArgb(232, 70, 26);
         Color color_30_plusInfinity_c = Color.FromArgb(198,0,0);
 
+        // connection label color
+        Color connection_label_connected_color = Color.FromArgb(169, 219, 98);
+        Color connection_label_disconnected_color = Color.FromArgb(198, 53, 27);
+
         // connect to arduino variables
         bool isConnected = false;
         String[] ports;
@@ -58,6 +62,7 @@ namespace ArduinoThermostat
             InitializeComponent();
             Init_form(); // form defaults before reading data
 
+            // keep trying to connect to detect thread and connect to arduino
             Thread HandshakeArduino = new Thread(DetectPort);
             HandshakeArduino.IsBackground = true; // make thread background thread to auto close on app exit
             HandshakeArduino.Start();
@@ -106,7 +111,8 @@ namespace ArduinoThermostat
                 port.Open();
                 enableControls();
                 connection_status_label.Text = "connected to port " + arduinoPortName;
-                connection_status_label.Show();
+                connection_status_label.ForeColor = connection_label_connected_color;
+                connection_status_label.Location = new Point(531, 764);
             }
             isConnected = true;
         }
@@ -114,7 +120,9 @@ namespace ArduinoThermostat
         private void Init_form()
         {
             disableControls();
-            connection_status_label.Hide();
+            connection_status_label.Text = "please plug in your arduino in any USB";
+            connection_status_label.ForeColor = connection_label_disconnected_color;
+            connection_status_label.Location = new Point(400, 764);
         }
 
         // When data is received from arduino...
