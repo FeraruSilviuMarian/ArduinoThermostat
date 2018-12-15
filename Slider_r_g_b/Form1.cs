@@ -54,8 +54,13 @@ namespace ArduinoThermostat
             InitializeComponent();
             init_form(); // form defaults before reading data
             getAvailableComPorts();
-            foreach (string port in ports)
+            foreach (string p in ports)
             {
+                port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
+                port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                port.Open();
+                port.Write("hello\n");
+
                 COM_combobox.Items.Add(port);
                 Console.WriteLine(port);   
             }

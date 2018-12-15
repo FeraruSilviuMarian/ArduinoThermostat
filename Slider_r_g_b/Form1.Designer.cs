@@ -198,6 +198,7 @@
             this.temperature_celsius_circularProgressBar.TabIndex = 50;
             this.temperature_celsius_circularProgressBar.Text = "0";
             this.temperature_celsius_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.temperature_celsius_circularProgressBar.Value = 50;
             this.temperature_celsius_circularProgressBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             // 
             // temperature_kelvin_circularProgressBar
@@ -232,6 +233,7 @@
             this.temperature_kelvin_circularProgressBar.TabIndex = 51;
             this.temperature_kelvin_circularProgressBar.Text = "0";
             this.temperature_kelvin_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.temperature_kelvin_circularProgressBar.Value = 50;
             this.temperature_kelvin_circularProgressBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             // 
             // temperature_fahrenheit_circularProgressBar
@@ -266,6 +268,7 @@
             this.temperature_fahrenheit_circularProgressBar.TabIndex = 52;
             this.temperature_fahrenheit_circularProgressBar.Text = "0";
             this.temperature_fahrenheit_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.temperature_fahrenheit_circularProgressBar.Value = 50;
             this.temperature_fahrenheit_circularProgressBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             // 
             // humidity_circularProgressBar
@@ -299,6 +302,7 @@
             this.humidity_circularProgressBar.TabIndex = 53;
             this.humidity_circularProgressBar.Text = "0";
             this.humidity_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.humidity_circularProgressBar.Value = 68;
             this.humidity_circularProgressBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             // 
             // Form1
