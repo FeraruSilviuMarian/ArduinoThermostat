@@ -16,7 +16,7 @@ namespace ArduinoThermostat
 {
     public partial class Form1 : Form
     {
-        // Colors
+        // Colors of circular progress bars
         Color color_minusInfinity_5_c = Color.FromArgb(113, 203, 221);
         Color color_5_10_c = Color.FromArgb(90, 114, 206);
         Color color_10_15_c = Color.FromArgb(224, 202, 78);
@@ -30,11 +30,12 @@ namespace ArduinoThermostat
         String[] ports;
         SerialPort port;
         string dataIn;
+      
         // detect arduino variables
         bool portFound = false;
-        string arduinoPortName; // COM port that responded to hello
+        string arduinoPortName; // will contain port name that responded to handshake
 
-        // Make borderless window draggable
+        // borderless window draggable
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         [DllImportAttribute("user32.dll")]
@@ -49,19 +50,26 @@ namespace ArduinoThermostat
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
         private IntPtr thisWindow;
 
         public Form1()
         {
             InitializeComponent();
-            init_form(); // form defaults before reading data
+            Init_form(); // form defaults before reading data
             getAvailableComPorts();
-            
+            while (!portFound)
+            {
+                DetectPort();
+            }
+            ConnectToArduino();
+        }
+
+        private void DetectPort()
+        {
             foreach (string p in ports)
             {
                 SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
-                
+
                 temp_port.Open();
                 temp_port.Write("h\n");
                 System.Threading.Thread.Sleep(1000);
@@ -75,21 +83,18 @@ namespace ArduinoThermostat
                     count--;
                 }
                 temp_port.Close();
-                if(returnMessage == "ARDUINO")
+                if (returnMessage == "ARDUINO")
                 {
                     arduinoPortName = p;
                     portFound = true;
                 }
             }
-            //connect to arduino
-            connectToArduino();
         }
 
-        private void connectToArduino()
+        private void ConnectToArduino()
         {
             if (!isConnected)
             {
-                // connect to arduino port
                 port = new SerialPort(arduinoPortName, 9600, Parity.None, 8, StopBits.One);
                 port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
                 port.Open();
@@ -101,7 +106,7 @@ namespace ArduinoThermostat
             isConnected = true;
         }
 
-        private void init_form()
+        private void Init_form()
         {
             disableControls();
             connection_status_label.Hide();
