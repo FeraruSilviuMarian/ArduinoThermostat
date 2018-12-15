@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.IO;
@@ -56,17 +57,16 @@ namespace ArduinoThermostat
         {
             InitializeComponent();
             Init_form(); // form defaults before reading data
-            MessageBox.Show("The app will start when you connect your arduino to an USB port");
-            while (!portFound)
-            {
-                getAvailableComPorts();
-                DetectPort();
-            }
-            ConnectToArduino();
+            //MessageBox.Show("The app will start when you connect your arduino to an USB port");
+
+            Thread HandshakeArduino = new Thread(DetectPort);
+            HandshakeArduino.Start();
         }
 
+        // This thread runs until a port is found
         private void DetectPort()
         {
+            getAvailableComPorts();
             foreach (string p in ports)
             {
                 SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
@@ -88,11 +88,13 @@ namespace ArduinoThermostat
                 {
                     arduinoPortName = p;
                     portFound = true;
+                    this.Invoke(new EventHandler(ConnectToArduino));
+                    Thread.CurrentThread.Abort();
                 }
             }
         }
 
-        private void ConnectToArduino()
+        private void ConnectToArduino(object sender, EventArgs e)
         {
             if (!isConnected && portFound)
             {
