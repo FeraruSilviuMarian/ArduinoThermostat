@@ -65,30 +65,33 @@ namespace ArduinoThermostat
         // This thread runs until a port is found
         private void DetectPort()
         {
-            getAvailableComPorts();
-            foreach (string p in ports)
+            while(!portFound)
             {
-                SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
-
-                temp_port.Open();
-                temp_port.Write("h\n");
-                System.Threading.Thread.Sleep(1000);
-
-                int count = temp_port.BytesToRead;
-                string returnMessage = "";
-                while (count > 0)
+                getAvailableComPorts();
+                foreach (string p in ports)
                 {
-                    int returnAscii = temp_port.ReadByte();
-                    returnMessage = returnMessage + Convert.ToChar(returnAscii);
-                    count--;
-                }
-                temp_port.Close();
-                if (returnMessage == "ARDUINO")
-                {
-                    arduinoPortName = p;
-                    portFound = true;
-                    this.Invoke(new EventHandler(ConnectToArduino));
-                    Thread.CurrentThread.Abort();
+                    SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
+
+                    temp_port.Open();
+                    temp_port.Write("h\n");
+                    System.Threading.Thread.Sleep(1000);
+
+                    int count = temp_port.BytesToRead;
+                    string returnMessage = "";
+                    while (count > 0)
+                    {
+                        int returnAscii = temp_port.ReadByte();
+                        returnMessage = returnMessage + Convert.ToChar(returnAscii);
+                        count--;
+                    }
+                    temp_port.Close();
+                    if (returnMessage == "ARDUINO")
+                    {
+                        arduinoPortName = p;
+                        portFound = true;
+                        this.Invoke(new EventHandler(ConnectToArduino));
+                        Thread.CurrentThread.Abort();
+                    }
                 }
             }
         }
