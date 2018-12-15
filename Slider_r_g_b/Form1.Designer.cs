@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.Connect_button = new System.Windows.Forms.Button();
             this.exit_button = new System.Windows.Forms.Button();
             this.minimize_button = new System.Windows.Forms.Button();
             this.pin11checkbox = new System.Windows.Forms.CheckBox();
@@ -44,16 +43,6 @@
             this.humidity_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.temperature_target_trackbar)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Connect_button
-            // 
-            this.Connect_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Connect_button.Location = new System.Drawing.Point(609, 738);
-            this.Connect_button.Name = "Connect_button";
-            this.Connect_button.Size = new System.Drawing.Size(167, 51);
-            this.Connect_button.TabIndex = 2;
-            this.Connect_button.Text = "Connect";
-            this.Connect_button.UseVisualStyleBackColor = true;
             // 
             // exit_button
             // 
@@ -312,7 +301,6 @@
             this.Controls.Add(this.pin11checkbox);
             this.Controls.Add(this.minimize_button);
             this.Controls.Add(this.exit_button);
-            this.Controls.Add(this.Connect_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -327,7 +315,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button Connect_button;
         private System.Windows.Forms.Button exit_button;
         private System.Windows.Forms.Button minimize_button;
         private System.Windows.Forms.CheckBox pin11checkbox;

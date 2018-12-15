@@ -59,6 +59,7 @@ namespace ArduinoThermostat
             Init_form(); // form defaults before reading data
 
             Thread HandshakeArduino = new Thread(DetectPort);
+            HandshakeArduino.IsBackground = true; // make thread background thread to auto close on app exit
             HandshakeArduino.Start();
         }
 
@@ -104,7 +105,6 @@ namespace ArduinoThermostat
                 port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
                 port.Open();
                 enableControls();
-                Connect_button.Hide();
                 connection_status_label.Text = "connected to port " + arduinoPortName;
                 connection_status_label.Show();
             }
