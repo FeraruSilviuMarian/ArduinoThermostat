@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Connect_button = new System.Windows.Forms.Button();
-            this.COM_combobox = new System.Windows.Forms.ComboBox();
             this.exit_button = new System.Windows.Forms.Button();
             this.minimize_button = new System.Windows.Forms.Button();
             this.pin11checkbox = new System.Windows.Forms.CheckBox();
@@ -55,16 +54,6 @@
             this.Connect_button.TabIndex = 2;
             this.Connect_button.Text = "Connect";
             this.Connect_button.UseVisualStyleBackColor = true;
-            this.Connect_button.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // COM_combobox
-            // 
-            this.COM_combobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.COM_combobox.FormattingEnabled = true;
-            this.COM_combobox.Location = new System.Drawing.Point(460, 748);
-            this.COM_combobox.Name = "COM_combobox";
-            this.COM_combobox.Size = new System.Drawing.Size(143, 32);
-            this.COM_combobox.TabIndex = 3;
             // 
             // exit_button
             // 
@@ -323,7 +312,6 @@
             this.Controls.Add(this.pin11checkbox);
             this.Controls.Add(this.minimize_button);
             this.Controls.Add(this.exit_button);
-            this.Controls.Add(this.COM_combobox);
             this.Controls.Add(this.Connect_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -340,7 +328,6 @@
 
         #endregion
         private System.Windows.Forms.Button Connect_button;
-        private System.Windows.Forms.ComboBox COM_combobox;
         private System.Windows.Forms.Button exit_button;
         private System.Windows.Forms.Button minimize_button;
         private System.Windows.Forms.CheckBox pin11checkbox;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -29,7 +30,9 @@ namespace ArduinoThermostat
         String[] ports;
         SerialPort port;
         string dataIn;
-        string portName;
+        // detect arduino variables
+        bool portFound = false;
+        string arduinoPortName; // COM port that responded to hello
 
         // Make borderless window draggable
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -54,20 +57,48 @@ namespace ArduinoThermostat
             InitializeComponent();
             init_form(); // form defaults before reading data
             getAvailableComPorts();
+            
             foreach (string p in ports)
             {
-                port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
+                SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
+                
+                temp_port.Open();
+                temp_port.Write("h\n");
+                System.Threading.Thread.Sleep(1000);
+
+                int count = temp_port.BytesToRead;
+                string returnMessage = "";
+                while (count > 0)
+                {
+                    int returnAscii = temp_port.ReadByte();
+                    returnMessage = returnMessage + Convert.ToChar(returnAscii);
+                    count--;
+                }
+                temp_port.Close();
+                if(returnMessage == "ARDUINO")
+                {
+                    arduinoPortName = p;
+                    portFound = true;
+                }
+            }
+            //connect to arduino
+            connectToArduino();
+        }
+
+        private void connectToArduino()
+        {
+            if (!isConnected)
+            {
+                // connect to arduino port
+                port = new SerialPort(arduinoPortName, 9600, Parity.None, 8, StopBits.One);
                 port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
                 port.Open();
-                port.Write("hello\n");
-
-                COM_combobox.Items.Add(port);
-                Console.WriteLine(port);   
+                enableControls();
+                Connect_button.Hide();
+                connection_status_label.Text = "connected to port " + arduinoPortName;
+                connection_status_label.Show();
             }
-            if (ports[1] != null)
-            {
-                COM_combobox.SelectedItem = ports[1];
-            }
+            isConnected = true;
         }
 
         private void init_form()
@@ -76,47 +107,16 @@ namespace ArduinoThermostat
             connection_status_label.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!isConnected)
-            {
-                connectToArduino();
-            }
-            else
-            {
-                disconnectFromArduino();
-            }
-        }
-
-        private void connectToArduino()
-        {
-            if (!isConnected)
-            {
-                string selectedPort = COM_combobox.GetItemText(COM_combobox.SelectedItem);
-                port = new SerialPort(selectedPort, 9600, Parity.None, 8, StopBits.One);
-                port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-                port.Open();
-                enableControls();
-                Connect_button.Hide();
-                COM_combobox.Hide();
-                connection_status_label.Text = "connected to port " + COM_combobox.Text;
-                connection_status_label.Show();
-            }
-            isConnected = true;
-        }
-
         // When data is received from arduino...
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
             dataIn = sp.ReadExisting();
-            portName = sp.PortName.ToString();
-            this.Invoke(new EventHandler(ProcessData));
+            this.Invoke(new EventHandler(ProcessData)); // call to process data
         }
         // process data received from arduino
         private void ProcessData(object sender, EventArgs e)
         {
-            connectToArduino();
             float temperature_celsius;
             float temperature_fahrenheit;
             float temperature_kelvin;
@@ -138,7 +138,7 @@ namespace ArduinoThermostat
             // calculate fahrenheit and kelvin
             temperature_fahrenheit = celsiusToFahrenheit(temperature_celsius);
             temperature_kelvin = celsiusToKelvin(temperature_celsius);
-            
+
             // set circular bars values, text and subscripts
             // NOTE update subscript if using a higher precission sensor like DHT22, to take advantage of the precission
             temperature_celsius_circularProgressBar.Value = (int)temperature_celsius;
@@ -227,29 +227,14 @@ namespace ArduinoThermostat
             }
         }
 
-        // deprecated
-        private void disconnectFromArduino()
-        {
-            isConnected = false;
-            port.Close();
-            Connect_button.Text = "Connect";
-            disableControls();
-            resetDefaults();
-        }
-
         private void disableControls()
         {
             temperature_target_trackbar.Enabled = false;
-
             pin11checkbox.Enabled = false;
-
-            temperature_celsius_circularProgressBar.Enabled = false;
         }
-
         private void enableControls()
         {
             temperature_target_trackbar.Enabled = true;
-
             pin11checkbox.Enabled = true;
         }
 
@@ -271,11 +256,6 @@ namespace ArduinoThermostat
         {
             float k = c + 273.15f;
             return k;
-        }
-
-        private void getAvailableComPorts()
-        {
-            ports = SerialPort.GetPortNames();
         }
 
         // exit button
@@ -352,6 +332,11 @@ namespace ArduinoThermostat
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
+        }
+
+        private void getAvailableComPorts()
+        {
+            ports = SerialPort.GetPortNames();
         }
     }
 }
