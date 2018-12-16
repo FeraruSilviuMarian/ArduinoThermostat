@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "dht.h"
-#define dht_apin A5 // Analog Pin sensor is connected to
+#define dht_apin A4 // Analog Pin sensor is connected to
 
 dht DHT; // DHT sensor, temperature and humidity sensor
 
@@ -69,6 +69,7 @@ void loop() {
   if (is_connected)
   {    
     send_DHT_data();
+    
     delay(1);
     DHT_time++;
   }

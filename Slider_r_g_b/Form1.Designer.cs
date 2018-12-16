@@ -111,6 +111,7 @@
             // 
             this.temperature_target_trackbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(57)))), ((int)(((byte)(64)))));
             this.temperature_target_trackbar.Cursor = System.Windows.Forms.Cursors.Default;
+            this.temperature_target_trackbar.LargeChange = 1;
             this.temperature_target_trackbar.Location = new System.Drawing.Point(12, 687);
             this.temperature_target_trackbar.Maximum = 50;
             this.temperature_target_trackbar.Name = "temperature_target_trackbar";

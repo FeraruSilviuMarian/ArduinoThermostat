@@ -17,8 +17,9 @@ namespace ArduinoThermostat
 {
     public partial class Form1 : Form
     {
-        // Colors of circular progress bars
-        Color color_minusInfinity_5_c = Color.FromArgb(113, 203, 221);
+        // Colors for temperature circular progress bars
+        Color color_minusInfinity_0 = Color.FromArgb(242, 252, 255);
+        Color color_0_5_c = Color.FromArgb(113, 203, 221);
         Color color_5_10_c = Color.FromArgb(90, 114, 206);
         Color color_10_15_c = Color.FromArgb(224, 202, 78);
         Color color_15_20_c = Color.FromArgb(219, 144, 63);
@@ -26,9 +27,16 @@ namespace ArduinoThermostat
         Color color_25_30_c = Color.FromArgb(232, 70, 26);
         Color color_30_plusInfinity_c = Color.FromArgb(198,0,0);
 
+        // Colors for humidity circular progress bars
+        Color color_80_100_humidity = Color.FromArgb(242, 252, 255);
+        Color color_60_80_humidity = Color.FromArgb(153, 212, 229);
+        Color color_35_60_humidity = Color.FromArgb(107, 148, 198);
+        Color color_15_35_humidity = Color.FromArgb(219, 184, 129);
+        Color color_0_15_humidity = Color.FromArgb(214, 76, 49);
+
         // connection label color
         Color connection_label_connected_color = Color.FromArgb(169, 219, 98);
-        Color connection_label_disconnected_color = Color.FromArgb(198, 53, 27);
+        Color connection_label_disconnected_color = Color.FromArgb(198, 129, 27);
 
         // connect to arduino variables
         bool isConnected = false;
@@ -112,7 +120,7 @@ namespace ArduinoThermostat
                 enableControls();
                 connection_status_label.Text = "connected to port " + arduinoPortName;
                 connection_status_label.ForeColor = connection_label_connected_color;
-                connection_status_label.Location = new Point(531, 764);
+                connection_status_label.Location = new Point(540, 764);
             }
             isConnected = true;
         }
@@ -167,17 +175,24 @@ namespace ArduinoThermostat
             temperature_kelvin_circularProgressBar.Value = (int)temperature_celsius;
             temperature_kelvin_circularProgressBar.Text = ((int)temperature_kelvin).ToString();
             temperature_kelvin_circularProgressBar.SubscriptText = (temperature_kelvin - (int)temperature_kelvin).ToString(".##");
-
             // color circular bars according to temperature
-            if (temperature_celsius <= 5)
+            if (temperature_celsius <= 0)
             {
-                temperature_celsius_circularProgressBar.ForeColor = color_minusInfinity_5_c;
-                temperature_celsius_circularProgressBar.ProgressColor = color_minusInfinity_5_c;
-                temperature_fahrenheit_circularProgressBar.ForeColor = color_minusInfinity_5_c;
-                temperature_fahrenheit_circularProgressBar.ProgressColor = color_minusInfinity_5_c;
-                temperature_kelvin_circularProgressBar.ForeColor = color_minusInfinity_5_c;
-                temperature_kelvin_circularProgressBar.ProgressColor = color_minusInfinity_5_c;
-
+                temperature_celsius_circularProgressBar.ForeColor = color_minusInfinity_0;
+                temperature_celsius_circularProgressBar.ProgressColor = color_minusInfinity_0;
+                temperature_fahrenheit_circularProgressBar.ForeColor = color_minusInfinity_0;
+                temperature_fahrenheit_circularProgressBar.ProgressColor = color_minusInfinity_0;
+                temperature_kelvin_circularProgressBar.ForeColor = color_minusInfinity_0;
+                temperature_kelvin_circularProgressBar.ProgressColor = color_minusInfinity_0;
+            }
+            else if (temperature_celsius <= 5)
+            {
+                temperature_celsius_circularProgressBar.ForeColor = color_0_5_c;
+                temperature_celsius_circularProgressBar.ProgressColor = color_0_5_c;
+                temperature_fahrenheit_circularProgressBar.ForeColor = color_0_5_c;
+                temperature_fahrenheit_circularProgressBar.ProgressColor = color_0_5_c;
+                temperature_kelvin_circularProgressBar.ForeColor = color_0_5_c;
+                temperature_kelvin_circularProgressBar.ProgressColor = color_0_5_c;
             }
             else if (temperature_celsius <= 10)
             {
@@ -234,12 +249,46 @@ namespace ArduinoThermostat
                 temperature_kelvin_circularProgressBar.ProgressColor = color_30_plusInfinity_c;
             }
 
+            // set humidity circular trackbar value and text and subscript
+            humidity_circularProgressBar.Value = (int)humidity;
+            humidity_circularProgressBar.Text = ((int)humidity).ToString();
+            humidity_circularProgressBar.SubscriptText = (humidity - (int)humidity).ToString(".##");
+            // TODO set humidity circular trackbar color based on humidity
+            if (humidity <= 15)
+            {
+                humidity_circularProgressBar.ForeColor = color_0_15_humidity;
+                humidity_circularProgressBar.ProgressColor = color_0_15_humidity;
+            }
+            else if (humidity <= 35)
+            {
+                humidity_circularProgressBar.ForeColor = color_15_35_humidity;
+                humidity_circularProgressBar.ProgressColor = color_15_35_humidity;
+            }
+            else if (humidity <= 60)
+            {
+                humidity_circularProgressBar.ForeColor = color_35_60_humidity;
+                humidity_circularProgressBar.ProgressColor = color_35_60_humidity;
+            }
+            else if (humidity <= 80)
+            {
+                humidity_circularProgressBar.ForeColor = color_60_80_humidity;
+                humidity_circularProgressBar.ProgressColor = color_60_80_humidity;
+            }
+            else if (humidity <= 100)
+            {
+                humidity_circularProgressBar.ForeColor = color_80_100_humidity;
+                humidity_circularProgressBar.ProgressColor = color_80_100_humidity;
+            }
+
             // thermostat
-            if (temperature_celsius <= 20)
+            int target_temp = temperature_target_trackbar.Value;
+            int min_temp = target_temp - 1;
+            int max_temp = target_temp + 1;
+            if (temperature_celsius <= min_temp)
             {
                 pin11checkbox.Checked = true;
             }
-            else if (temperature_celsius >= 21)
+            else if (temperature_celsius >= max_temp)
             {
                 pin11checkbox.Checked = false;
             }
@@ -279,6 +328,7 @@ namespace ArduinoThermostat
         // exit button
         private void button4_Click(object sender, EventArgs e)
         {
+            pin11checkbox.Checked = true;
             Application.Exit();
         }
 
