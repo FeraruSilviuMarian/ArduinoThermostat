@@ -17,6 +17,9 @@ namespace ArduinoThermostat
 {
     public partial class Form1 : Form
     {
+        // fore color for circular bars text when disconnected
+        Color circular_bars_default_forecolor = Color.FromArgb(194, 200, 209);
+
         // Colors for temperature circular progress bars
         Color color_minusInfinity_0 = Color.FromArgb(242, 252, 255);
         Color color_0_5_c = Color.FromArgb(113, 203, 221);
@@ -76,11 +79,28 @@ namespace ArduinoThermostat
             HandshakeArduino.Start();
         }
 
-        // This thread runs until a port is found
+        // Thread that runs continuously to try to connect to arduino TODO
         private void DetectPort()
         {
-            while(!portFound)
+            while(true)
             {
+                Thread.Sleep(10); // sleep to prevent blocking
+                
+                // if the port was found and is now closed, arduino was disconnected, and need to seek the new port
+                if (portFound)
+                {
+                    // if port found, open and connected, no need to do anything
+                    if (port.IsOpen && isConnected)
+                    {
+                        continue;
+                    }
+                    else // if port found but not open, arduino got disconnected and we need to reconnect
+                    {
+                        this.Invoke(new EventHandler(DisconnectFromArduino));
+                    }
+                }
+
+                // if port not found, find it and connect to it
                 getAvailableComPorts();
                 foreach (string p in ports)
                 {
@@ -104,10 +124,17 @@ namespace ArduinoThermostat
                         arduinoPortName = p;
                         portFound = true;
                         this.Invoke(new EventHandler(ConnectToArduino));
-                        Thread.CurrentThread.Abort();
+                        //Thread.CurrentThread.Abort();
                     }
                 }
             }
+        }
+
+        private void DisconnectFromArduino(object sender, EventArgs e)
+        {
+            portFound = false;
+            isConnected = false;
+            Init_form();
         }
 
         private void ConnectToArduino(object sender, EventArgs e)
@@ -128,9 +155,36 @@ namespace ArduinoThermostat
         private void Init_form()
         {
             disableControls();
+
+            //pin11checkbox.Checked = false;
+
             connection_status_label.Text = "please plug in your arduino in any USB";
             connection_status_label.ForeColor = connection_label_disconnected_color;
             connection_status_label.Location = new Point(400, 764);
+
+            temperature_celsius_circularProgressBar.Text = "0";
+            temperature_celsius_circularProgressBar.SubscriptText = ".00";
+            temperature_celsius_circularProgressBar.ForeColor = circular_bars_default_forecolor;
+            temperature_celsius_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
+            temperature_celsius_circularProgressBar.Value = 0;
+
+            temperature_fahrenheit_circularProgressBar.Text = "0";
+            temperature_fahrenheit_circularProgressBar.SubscriptText = ".00";
+            temperature_fahrenheit_circularProgressBar.ForeColor = circular_bars_default_forecolor;
+            temperature_fahrenheit_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
+            temperature_fahrenheit_circularProgressBar.Value = 0;
+
+            temperature_kelvin_circularProgressBar.Text = "0";
+            temperature_kelvin_circularProgressBar.SubscriptText = ".00";
+            temperature_kelvin_circularProgressBar.ForeColor = circular_bars_default_forecolor;
+            temperature_kelvin_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
+            temperature_kelvin_circularProgressBar.Value = 0;
+
+            humidity_circularProgressBar.Text = "0";
+            humidity_circularProgressBar.SubscriptText = ".00";
+            humidity_circularProgressBar.ForeColor = circular_bars_default_forecolor;
+            humidity_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
+            humidity_circularProgressBar.Value = 0;
         }
 
         // When data is received from arduino...
@@ -328,7 +382,11 @@ namespace ArduinoThermostat
         // exit button
         private void button4_Click(object sender, EventArgs e)
         {
-            pin11checkbox.Checked = true;
+            if (portFound && port.IsOpen)
+            {
+                pin11checkbox.Checked = false;
+                Thread.Sleep(100);
+            }
             Application.Exit();
         }
 
@@ -341,6 +399,23 @@ namespace ArduinoThermostat
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
             if (pin11checkbox.Checked)
+            {
+                port.Write("digitalJ1\n");
+            }
+            else
+            {
+                port.Write("digitalJ0\n");
+            }
+        }
+
+        private void Heat(bool state)
+        {
+            if (!portFound || !port.IsOpen || !isConnected)
+            {
+                MessageBox.Show("An error has occured, arduino is disconnected");
+                Application.Exit();
+            }
+            if (state)
             {
                 port.Write("digitalJ1\n");
             }

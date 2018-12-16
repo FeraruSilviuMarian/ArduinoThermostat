@@ -162,7 +162,7 @@
             this.temperature_celsius_circularProgressBar.OuterColor = System.Drawing.Color.Gray;
             this.temperature_celsius_circularProgressBar.OuterMargin = -25;
             this.temperature_celsius_circularProgressBar.OuterWidth = 26;
-            this.temperature_celsius_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.temperature_celsius_circularProgressBar.ProgressColor = System.Drawing.SystemColors.ButtonShadow;
             this.temperature_celsius_circularProgressBar.ProgressWidth = 25;
             this.temperature_celsius_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
             this.temperature_celsius_circularProgressBar.Size = new System.Drawing.Size(320, 320);
@@ -197,7 +197,7 @@
             this.temperature_kelvin_circularProgressBar.OuterColor = System.Drawing.Color.Gray;
             this.temperature_kelvin_circularProgressBar.OuterMargin = -25;
             this.temperature_kelvin_circularProgressBar.OuterWidth = 26;
-            this.temperature_kelvin_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.temperature_kelvin_circularProgressBar.ProgressColor = System.Drawing.SystemColors.ButtonShadow;
             this.temperature_kelvin_circularProgressBar.ProgressWidth = 25;
             this.temperature_kelvin_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.temperature_kelvin_circularProgressBar.Size = new System.Drawing.Size(260, 260);
@@ -232,7 +232,7 @@
             this.temperature_fahrenheit_circularProgressBar.OuterColor = System.Drawing.Color.Gray;
             this.temperature_fahrenheit_circularProgressBar.OuterMargin = -25;
             this.temperature_fahrenheit_circularProgressBar.OuterWidth = 26;
-            this.temperature_fahrenheit_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.temperature_fahrenheit_circularProgressBar.ProgressColor = System.Drawing.SystemColors.ButtonShadow;
             this.temperature_fahrenheit_circularProgressBar.ProgressWidth = 25;
             this.temperature_fahrenheit_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.temperature_fahrenheit_circularProgressBar.Size = new System.Drawing.Size(260, 260);
@@ -266,7 +266,7 @@
             this.humidity_circularProgressBar.OuterColor = System.Drawing.Color.Gray;
             this.humidity_circularProgressBar.OuterMargin = -25;
             this.humidity_circularProgressBar.OuterWidth = 26;
-            this.humidity_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.humidity_circularProgressBar.ProgressColor = System.Drawing.SystemColors.ButtonShadow;
             this.humidity_circularProgressBar.ProgressWidth = 25;
             this.humidity_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
             this.humidity_circularProgressBar.Size = new System.Drawing.Size(320, 320);
