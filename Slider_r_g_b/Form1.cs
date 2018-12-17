@@ -51,6 +51,8 @@ namespace ArduinoThermostat
         bool portFound = false;
         string arduinoPortName; // will contain port name that responded to handshake
 
+        bool heating = false;
+
         // borderless window draggable
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -156,7 +158,7 @@ namespace ArduinoThermostat
         {
             disableControls();
 
-            //pin11checkbox.Checked = false;
+            heating = false;
 
             connection_status_label.Text = "please plug in your arduino in any USB";
             connection_status_label.ForeColor = connection_label_disconnected_color;
@@ -340,31 +342,21 @@ namespace ArduinoThermostat
             int max_temp = target_temp + 1;
             if (temperature_celsius <= min_temp)
             {
-                pin11checkbox.Checked = true;
+                Heat(true);
             }
             else if (temperature_celsius >= max_temp)
             {
-                pin11checkbox.Checked = false;
+                Heat(false);
             }
         }
 
         private void disableControls()
         {
             temperature_target_trackbar.Enabled = false;
-            pin11checkbox.Enabled = false;
         }
         private void enableControls()
         {
             temperature_target_trackbar.Enabled = true;
-            pin11checkbox.Enabled = true;
-        }
-
-        // deprecated
-        private void resetDefaults()
-        {
-            temperature_target_trackbar.Value = 0;
-
-            pin11checkbox.Checked = false;
         }
 
         private float celsiusToFahrenheit(float c)
@@ -384,7 +376,7 @@ namespace ArduinoThermostat
         {
             if (portFound && port.IsOpen)
             {
-                pin11checkbox.Checked = false;
+                Heat(false);
                 Thread.Sleep(100);
             }
             Application.Exit();
@@ -394,18 +386,6 @@ namespace ArduinoThermostat
         private void button2_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (pin11checkbox.Checked)
-            {
-                port.Write("digitalJ1\n");
-            }
-            else
-            {
-                port.Write("digitalJ0\n");
-            }
         }
 
         private void Heat(bool state)
@@ -418,10 +398,12 @@ namespace ArduinoThermostat
             if (state)
             {
                 port.Write("digitalJ1\n");
+                heating = true;
             }
             else
             {
                 port.Write("digitalJ0\n");
+                heating = false;
             }
         }
 

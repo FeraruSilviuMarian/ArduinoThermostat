@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.exit_button = new System.Windows.Forms.Button();
             this.minimize_button = new System.Windows.Forms.Button();
-            this.pin11checkbox = new System.Windows.Forms.CheckBox();
             this.temperature_target_label = new System.Windows.Forms.Label();
             this.temperature_target_value_label = new System.Windows.Forms.Label();
             this.temperature_target_trackbar = new System.Windows.Forms.TrackBar();
@@ -69,19 +68,6 @@
             this.minimize_button.Text = "_";
             this.minimize_button.UseVisualStyleBackColor = true;
             this.minimize_button.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // pin11checkbox
-            // 
-            this.pin11checkbox.AutoSize = true;
-            this.pin11checkbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pin11checkbox.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.pin11checkbox.Location = new System.Drawing.Point(180, 743);
-            this.pin11checkbox.Name = "pin11checkbox";
-            this.pin11checkbox.Size = new System.Drawing.Size(150, 46);
-            this.pin11checkbox.TabIndex = 17;
-            this.pin11checkbox.Text = "PIN 11";
-            this.pin11checkbox.UseVisualStyleBackColor = true;
-            this.pin11checkbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
             // temperature_target_label
             // 
@@ -299,7 +285,6 @@
             this.Controls.Add(this.temperature_target_label);
             this.Controls.Add(this.temperature_target_value_label);
             this.Controls.Add(this.temperature_target_trackbar);
-            this.Controls.Add(this.pin11checkbox);
             this.Controls.Add(this.minimize_button);
             this.Controls.Add(this.exit_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -318,7 +303,6 @@
         #endregion
         private System.Windows.Forms.Button exit_button;
         private System.Windows.Forms.Button minimize_button;
-        private System.Windows.Forms.CheckBox pin11checkbox;
         private System.Windows.Forms.Label temperature_target_label;
         private System.Windows.Forms.Label temperature_target_value_label;
         private System.Windows.Forms.TrackBar temperature_target_trackbar;
