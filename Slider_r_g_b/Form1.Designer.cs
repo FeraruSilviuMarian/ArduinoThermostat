@@ -295,6 +295,7 @@
             this.settings_Button.TabIndex = 55;
             this.settings_Button.Text = "⚙";
             this.settings_Button.UseVisualStyleBackColor = true;
+            this.settings_Button.Click += new System.EventHandler(this.settings_Button_Click);
             // 
             // Form1
             // 

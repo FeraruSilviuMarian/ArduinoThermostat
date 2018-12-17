@@ -17,7 +17,7 @@ const int pin_F = 7;
 const int pin_G = 8;
 const int pin_H = 9;  // ~
 const int pin_I = 10;  // ~
-const int pin_J = 11; // ~
+const int pin_J = 11; // ~ using this pin for heater
 const int pin_K = 12;
 const int pin_L = 13;
 

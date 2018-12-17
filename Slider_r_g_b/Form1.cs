@@ -73,9 +73,9 @@ namespace ArduinoThermostat
             InitializeComponent();
             Init_form(); // set form defaults
 
-            Thread HandshakeArduino = new Thread(DetectPort); // thread that keeps checking
-            HandshakeArduino.IsBackground = true; // set thread background to auto close on app exit
-            HandshakeArduino.Start();
+            var maintainConnection = new Thread(DetectPort);
+            maintainConnection.IsBackground = true; // set thread background to auto close on app exit
+            maintainConnection.Start();
         }
 
         private void DetectPort()
@@ -458,6 +458,12 @@ namespace ArduinoThermostat
         private void getAvailableComPorts()
         {
             ports = SerialPort.GetPortNames();
+        }
+
+        private void settings_Button_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsWindow = new SettingsForm();
+            settingsWindow.Show();
         }
     }
 }
