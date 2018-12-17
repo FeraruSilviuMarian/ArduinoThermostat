@@ -73,41 +73,36 @@ namespace ArduinoThermostat
         public Form1()
         {
             InitializeComponent();
-            Init_form(); // form defaults before reading data
+            Init_form(); // set form defaults
 
-            // keep trying to connect to detect thread and connect to arduino
-            Thread HandshakeArduino = new Thread(DetectPort);
-            HandshakeArduino.IsBackground = true; // make thread background thread to auto close on app exit
+            Thread HandshakeArduino = new Thread(DetectPort); // thread that keeps checking
+            HandshakeArduino.IsBackground = true; // set thread background to auto close on app exit
             HandshakeArduino.Start();
         }
 
-        // Thread that runs continuously to try to connect to arduino TODO
         private void DetectPort()
         {
             while(true)
             {
-                Thread.Sleep(10); // sleep to prevent blocking
+                Thread.Sleep(10);
                 
-                // if the port was found and is now closed, arduino was disconnected, and need to seek the new port
                 if (portFound)
                 {
-                    // if port found, open and connected, no need to do anything
                     if (port.IsOpen && isConnected)
                     {
                         continue;
                     }
-                    else // if port found but not open, arduino got disconnected and we need to reconnect
+                    else // port found but closed...
                     {
                         this.Invoke(new EventHandler(DisconnectFromArduino));
                     }
                 }
 
-                // if port not found, find it and connect to it
+                // if arduino not connected, try to connect
                 getAvailableComPorts();
                 foreach (string p in ports)
                 {
                     SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
-
                     temp_port.Open();
                     temp_port.Write("h\n");
                     System.Threading.Thread.Sleep(1000);
@@ -126,7 +121,6 @@ namespace ArduinoThermostat
                         arduinoPortName = p;
                         portFound = true;
                         this.Invoke(new EventHandler(ConnectToArduino));
-                        //Thread.CurrentThread.Abort();
                     }
                 }
             }
@@ -157,7 +151,6 @@ namespace ArduinoThermostat
         private void Init_form()
         {
             disableControls();
-
             heating = false;
 
             connection_status_label.Text = "please plug in your arduino in any USB";
@@ -225,6 +218,7 @@ namespace ArduinoThermostat
             // NOTE update subscript if using a higher precission sensor like DHT22, to take advantage of the precission
             temperature_celsius_circularProgressBar.Value = (int)temperature_celsius;
             temperature_celsius_circularProgressBar.Text = ((int)temperature_celsius).ToString();
+            temperature_celsius_circularProgressBar.SubscriptText = (temperature_celsius - (int)temperature_celsius).ToString(".##");
             temperature_fahrenheit_circularProgressBar.Value = (int)temperature_celsius;
             temperature_fahrenheit_circularProgressBar.Text = ((int)temperature_fahrenheit).ToString();
             temperature_fahrenheit_circularProgressBar.SubscriptText = (temperature_fahrenheit - (int)temperature_fahrenheit).ToString(".##");
@@ -438,20 +432,20 @@ namespace ArduinoThermostat
             //UnregisterHotKey(thisWindow, 1);
         }
 
-        protected override void WndProc(ref Message keyPressed)
+        protected override void WndProc(ref Message m)
         {
-            if(keyPressed.Msg == 786)
+            if(m.Msg == 786) // https://wiki.winehq.org/List_Of_Windows_Messages
             {
-                Console.WriteLine("some");
-                MessageBox.Show("key pressed");
+                Console.WriteLine("hotkey fire");
+                MessageBox.Show("hotkey fire");
             }
 
-            base.WndProc(ref keyPressed);
+            base.WndProc(ref m);
         }
 
         private void Drag_Form(object sender, MouseEventArgs e)
         {
-            // drag form by mousedown on element
+            // drag element by mouse
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
