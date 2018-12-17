@@ -51,8 +51,6 @@ namespace ArduinoThermostat
         bool portFound = false;
         string arduinoPortName; // will contain port name that responded to handshake
 
-        bool heating = false;
-
         // borderless window draggable
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -61,7 +59,7 @@ namespace ArduinoThermostat
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        // TODO hotkeys
+        // for hotkeys
         [DllImport("user32.dll")]
         private static extern IntPtr FindWindow(String sClassName, String sAppName);
         [DllImport("user32.dll")]
@@ -151,7 +149,9 @@ namespace ArduinoThermostat
         private void Init_form()
         {
             disableControls();
-            heating = false;
+
+            temperature_target_trackbar.Value = Properties.Settings.Default.TemperatureStartTarget;
+            temperature_target_label.Text = (Properties.Settings.Default.TemperatureStartTarget).ToString();
 
             connection_status_label.Text = "please plug in your arduino in any USB";
             connection_status_label.ForeColor = connection_label_disconnected_color;
@@ -392,12 +392,11 @@ namespace ArduinoThermostat
             if (state)
             {
                 port.Write("digitalJ1\n");
-                heating = true;
             }
             else
             {
                 port.Write("digitalJ0\n");
-                heating = false;
+                
             }
         }
 

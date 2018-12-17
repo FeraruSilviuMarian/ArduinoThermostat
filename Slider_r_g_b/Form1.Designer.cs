@@ -40,7 +40,10 @@
             this.temperature_kelvin_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             this.temperature_fahrenheit_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             this.humidity_circularProgressBar = new CircularProgressBar.CircularProgressBar();
+            this.heater_status_icon = new System.Windows.Forms.PictureBox();
+            this.settings_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.temperature_target_trackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heater_status_icon)).BeginInit();
             this.SuspendLayout();
             // 
             // exit_button
@@ -270,12 +273,37 @@
             this.humidity_circularProgressBar.Value = 68;
             this.humidity_circularProgressBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             // 
+            // heater_status_icon
+            // 
+            this.heater_status_icon.Image = ((System.Drawing.Image)(resources.GetObject("heater_status_icon.Image")));
+            this.heater_status_icon.Location = new System.Drawing.Point(2, 0);
+            this.heater_status_icon.Name = "heater_status_icon";
+            this.heater_status_icon.Size = new System.Drawing.Size(96, 100);
+            this.heater_status_icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.heater_status_icon.TabIndex = 54;
+            this.heater_status_icon.TabStop = false;
+            this.heater_status_icon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
+            // 
+            // settings_Button
+            // 
+            this.settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settings_Button.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.settings_Button.Location = new System.Drawing.Point(662, 13);
+            this.settings_Button.Name = "settings_Button";
+            this.settings_Button.Size = new System.Drawing.Size(34, 23);
+            this.settings_Button.TabIndex = 55;
+            this.settings_Button.Text = "⚙";
+            this.settings_Button.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(57)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(789, 798);
+            this.Controls.Add(this.settings_Button);
+            this.Controls.Add(this.heater_status_icon);
             this.Controls.Add(this.connection_status_label);
             this.Controls.Add(this.humidity_circularProgressBar);
             this.Controls.Add(this.temperature_fahrenheit_circularProgressBar);
@@ -295,6 +323,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             ((System.ComponentModel.ISupportInitialize)(this.temperature_target_trackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heater_status_icon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +341,8 @@
         private CircularProgressBar.CircularProgressBar temperature_kelvin_circularProgressBar;
         private CircularProgressBar.CircularProgressBar temperature_fahrenheit_circularProgressBar;
         private CircularProgressBar.CircularProgressBar humidity_circularProgressBar;
+        private System.Windows.Forms.PictureBox heater_status_icon;
+        private System.Windows.Forms.Button settings_Button;
     }
 }
 
