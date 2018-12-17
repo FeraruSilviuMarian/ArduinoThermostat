@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace ArduinoThermostat
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         SettingsForm settingsWindow = new SettingsForm();
 
@@ -70,7 +70,7 @@ namespace ArduinoThermostat
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
         private IntPtr thisWindow;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             Init_form(); // set form defaults
