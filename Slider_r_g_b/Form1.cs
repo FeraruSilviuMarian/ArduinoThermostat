@@ -150,6 +150,8 @@ namespace ArduinoThermostat
         {
             disableControls();
 
+            heater_status_icon.Hide();
+
             temperature_target_trackbar.Value = Properties.Settings.Default.TemperatureStartTarget;
             temperature_target_label.Text = (Properties.Settings.Default.TemperatureStartTarget).ToString();
 
@@ -392,11 +394,12 @@ namespace ArduinoThermostat
             if (state)
             {
                 port.Write("digitalJ1\n");
+                heater_status_icon.Show();
             }
             else
             {
                 port.Write("digitalJ0\n");
-                
+                heater_status_icon.Hide();
             }
         }
 
