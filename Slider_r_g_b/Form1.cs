@@ -17,6 +17,8 @@ namespace ArduinoThermostat
 {
     public partial class Form1 : Form
     {
+        SettingsForm settingsWindow = new SettingsForm();
+
         // fore color for circular bars text when disconnected
         Color circular_bars_default_forecolor = Color.FromArgb(194, 200, 209);
 
@@ -153,7 +155,7 @@ namespace ArduinoThermostat
             heater_status_icon.Hide();
 
             temperature_target_trackbar.Value = Properties.Settings.Default.TemperatureStartTarget;
-            temperature_target_label.Text = (Properties.Settings.Default.TemperatureStartTarget).ToString();
+            temperature_target_value_label.Text = (Properties.Settings.Default.TemperatureStartTarget).ToString();
 
             connection_status_label.Text = "please plug in your arduino in any USB";
             connection_status_label.ForeColor = connection_label_disconnected_color;
@@ -462,7 +464,6 @@ namespace ArduinoThermostat
 
         private void settings_Button_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsWindow = new SettingsForm();
             settingsWindow.Show();
         }
     }
