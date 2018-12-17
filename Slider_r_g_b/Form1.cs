@@ -184,6 +184,8 @@ namespace ArduinoThermostat
             humidity_circularProgressBar.ForeColor = circular_bars_default_forecolor;
             humidity_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
             humidity_circularProgressBar.Value = 0;
+
+            this.Opacity = ((double)Properties.Settings.Default.MainFormOpacity / 100);
         }
 
         // When data is received from arduino...
