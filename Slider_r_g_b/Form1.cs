@@ -99,7 +99,7 @@ namespace ArduinoThermostat
                 }
 
                 // if arduino not connected, try to connect
-                getAvailableComPorts();
+                Get_Available_COM_Ports();
                 foreach (string p in ports)
                 {
                     SerialPort temp_port = new SerialPort(p, 9600, Parity.None, 8, StopBits.One);
@@ -140,7 +140,7 @@ namespace ArduinoThermostat
                 port = new SerialPort(arduinoPortName, 9600, Parity.None, 8, StopBits.One);
                 port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
                 port.Open();
-                enableControls();
+                EnableControls();
                 connection_status_label.Text = "connected to port " + arduinoPortName;
                 connection_status_label.ForeColor = connection_label_connected_color;
                 connection_status_label.Location = new Point(540, 764);
@@ -150,7 +150,7 @@ namespace ArduinoThermostat
 
         private void Init_form()
         {
-            disableControls();
+            DisableControls();
 
             heater_status_icon.Hide();
 
@@ -185,7 +185,9 @@ namespace ArduinoThermostat
             humidity_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
             humidity_circularProgressBar.Value = 0;
 
+            // form settings
             this.Opacity = ((double)Properties.Settings.Default.MainFormOpacity / 100);
+            //Application.OpenForms[0].StartPosition = FormStartPosition.Manual; // TODO
         }
 
         // When data is received from arduino...
@@ -217,8 +219,8 @@ namespace ArduinoThermostat
             readings.Clear();
 
             // calculate fahrenheit and kelvin
-            temperature_fahrenheit = celsiusToFahrenheit(temperature_celsius);
-            temperature_kelvin = celsiusToKelvin(temperature_celsius);
+            temperature_fahrenheit = CelsiusToFahrenheit(temperature_celsius);
+            temperature_kelvin = CelsiusToKelvin(temperature_celsius);
 
             // set circular bars values, text and subscripts
             // NOTE update subscript if using a higher precission sensor like DHT22, to take advantage of the precission
@@ -350,40 +352,41 @@ namespace ArduinoThermostat
             }
         }
 
-        private void disableControls()
+        private void DisableControls()
         {
             temperature_target_trackbar.Enabled = false;
         }
-        private void enableControls()
+        private void EnableControls()
         {
             temperature_target_trackbar.Enabled = true;
         }
 
-        private float celsiusToFahrenheit(float c)
+        private float CelsiusToFahrenheit(float c)
         {
             float f = c * 9 / 5 + 32;
             return f;
         }
 
-        private float celsiusToKelvin(float c)
+        private float CelsiusToKelvin(float c)
         {
             float k = c + 273.15f;
             return k;
         }
 
         // exit button
-        private void button4_Click(object sender, EventArgs e)
+        private void Exit_Button_Click(object sender, EventArgs e)
         {
             if (portFound && port.IsOpen)
             {
                 Heat(false);
                 Thread.Sleep(100);
             }
+            Properties.Settings.Default.mainFormLocation = this.Location; // save current position
             Application.Exit();
         }
 
         // minimize button
-        private void button2_Click(object sender, EventArgs e)
+        private void Minimize_Button_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
@@ -407,7 +410,7 @@ namespace ArduinoThermostat
             }
         }
 
-        private void pin3trackbar_Scroll(object sender, EventArgs e)
+        private void Temperature_target_trackbar_scroll(object sender, EventArgs e)
         {
             string temp = temperature_target_trackbar.Value.ToString();
             temperature_target_value_label.Text = temp;
@@ -418,7 +421,7 @@ namespace ArduinoThermostat
         }
 
         // HOTKEYS
-        public enum fsModifiers
+        public enum FsModifiers
         {
             Alt = 0x0001,
             Control = 0x0002,
@@ -426,7 +429,7 @@ namespace ArduinoThermostat
             Window = 0x0008,
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Main_Form_Load(object sender, EventArgs e)
         {
             thisWindow = FindWindow(null, "Form1");
 
@@ -459,12 +462,12 @@ namespace ArduinoThermostat
             }
         }
 
-        private void getAvailableComPorts()
+        private void Get_Available_COM_Ports()
         {
             ports = SerialPort.GetPortNames();
         }
 
-        private void settings_Button_Click(object sender, EventArgs e)
+        private void Settings_Button_Click(object sender, EventArgs e)
         {
             settingsWindow.Show();
         }

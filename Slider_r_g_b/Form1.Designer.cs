@@ -57,7 +57,7 @@
             this.exit_button.TabIndex = 13;
             this.exit_button.Text = "X";
             this.exit_button.UseVisualStyleBackColor = true;
-            this.exit_button.Click += new System.EventHandler(this.button4_Click);
+            this.exit_button.Click += new System.EventHandler(this.Exit_Button_Click);
             // 
             // minimize_button
             // 
@@ -70,7 +70,7 @@
             this.minimize_button.TabIndex = 14;
             this.minimize_button.Text = "_";
             this.minimize_button.UseVisualStyleBackColor = true;
-            this.minimize_button.Click += new System.EventHandler(this.button2_Click);
+            this.minimize_button.Click += new System.EventHandler(this.Minimize_Button_Click);
             // 
             // temperature_target_label
             // 
@@ -107,7 +107,7 @@
             this.temperature_target_trackbar.Size = new System.Drawing.Size(765, 45);
             this.temperature_target_trackbar.TabIndex = 33;
             this.temperature_target_trackbar.Value = 20;
-            this.temperature_target_trackbar.Scroll += new System.EventHandler(this.pin3trackbar_Scroll);
+            this.temperature_target_trackbar.Scroll += new System.EventHandler(this.Temperature_target_trackbar_scroll);
             // 
             // connection_status_label
             // 
@@ -295,7 +295,7 @@
             this.settings_Button.TabIndex = 55;
             this.settings_Button.Text = "⚙";
             this.settings_Button.UseVisualStyleBackColor = true;
-            this.settings_Button.Click += new System.EventHandler(this.settings_Button_Click);
+            this.settings_Button.Click += new System.EventHandler(this.Settings_Button_Click);
             // 
             // MainForm
             // 
@@ -321,7 +321,7 @@
             this.Name = "MainForm";
             this.Text = "Arduino Thermostat";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Main_Form_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_Form);
             ((System.ComponentModel.ISupportInitialize)(this.temperature_target_trackbar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heater_status_icon)).EndInit();
