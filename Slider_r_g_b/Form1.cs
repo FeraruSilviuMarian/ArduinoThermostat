@@ -185,9 +185,12 @@ namespace ArduinoThermostat
             humidity_circularProgressBar.ProgressColor = circular_bars_default_forecolor;
             humidity_circularProgressBar.Value = 0;
 
-            // form settings
+            // form attributes
             this.Opacity = ((double)Properties.Settings.Default.MainFormOpacity / 100);
-            //Application.OpenForms[0].StartPosition = FormStartPosition.Manual; // TODO
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.Left = Properties.Settings.Default.mainFormLocation.X;
+            this.Top = Properties.Settings.Default.mainFormLocation.Y;
         }
 
         // When data is received from arduino...
@@ -381,7 +384,9 @@ namespace ArduinoThermostat
                 Heat(false);
                 Thread.Sleep(100);
             }
-            Properties.Settings.Default.mainFormLocation = this.Location; // save current position
+            Properties.Settings.Default.mainFormLocation = new Point(this.Location.X, this.Location.Y);
+            Properties.Settings.Default.settingsFormLocation = new Point(settingsWindow.Location.X, settingsWindow.Location.Y);
+            Properties.Settings.Default.Save();
             Application.Exit();
         }
 

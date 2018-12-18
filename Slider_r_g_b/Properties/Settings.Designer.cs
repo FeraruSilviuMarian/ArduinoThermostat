@@ -58,5 +58,17 @@ namespace ArduinoThermostat.Properties {
                 this["mainFormLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point settingsFormLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["settingsFormLocation"]));
+            }
+            set {
+                this["settingsFormLocation"] = value;
+            }
+        }
     }
 }
