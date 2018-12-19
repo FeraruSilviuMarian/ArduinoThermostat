@@ -42,6 +42,8 @@ namespace ArduinoThermostat
             this.StartPosition = FormStartPosition.Manual;
             this.Left = Properties.Settings.Default.settingsFormLocation.X;
             this.Top = Properties.Settings.Default.settingsFormLocation.Y;
+
+            useTrayIcon_checkbox.Checked = Properties.Settings.Default.showInTray;
         }
 
         // exit button
@@ -80,6 +82,15 @@ namespace ArduinoThermostat
             Application.OpenForms[0].Opacity = ((double)opacitySetting_trackbar.Value / 100);
             opacitySettingValue_label.Text = (opacitySetting_trackbar.Value).ToString();
             Properties.Settings.Default.MainFormOpacity = opacitySetting_trackbar.Value;
+            Properties.Settings.Default.Save();
+        }
+
+        public void UseTrayIcon_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.showInTray = useTrayIcon_checkbox.Checked;
+
+            //mainFormRef.notifyIcon.Visible = useTrayIcon_checkbox.Checked; // TODO make action happen right away
+
             Properties.Settings.Default.Save();
         }
     }

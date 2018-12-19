@@ -40,6 +40,7 @@
             this.opacitySettingValue_label = new System.Windows.Forms.Label();
             this.OpacitySetting_label = new System.Windows.Forms.Label();
             this.opacitySetting_trackbar = new System.Windows.Forms.TrackBar();
+            this.useTrayIcon_checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.start_temperature_setting_trackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacitySetting_trackbar)).BeginInit();
             this.SuspendLayout();
@@ -174,12 +175,27 @@
             this.opacitySetting_trackbar.Value = 10;
             this.opacitySetting_trackbar.Scroll += new System.EventHandler(this.OpacitySetting_trackbar_Scroll);
             // 
+            // useTrayIcon_checkbox
+            // 
+            this.useTrayIcon_checkbox.AutoSize = true;
+            this.useTrayIcon_checkbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.useTrayIcon_checkbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.useTrayIcon_checkbox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.useTrayIcon_checkbox.Location = new System.Drawing.Point(28, 234);
+            this.useTrayIcon_checkbox.Name = "useTrayIcon_checkbox";
+            this.useTrayIcon_checkbox.Size = new System.Drawing.Size(246, 29);
+            this.useTrayIcon_checkbox.TabIndex = 57;
+            this.useTrayIcon_checkbox.Text = "Show system tray icon";
+            this.useTrayIcon_checkbox.UseVisualStyleBackColor = true;
+            this.useTrayIcon_checkbox.CheckedChanged += new System.EventHandler(this.UseTrayIcon_Checkbox_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(57)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(789, 417);
+            this.Controls.Add(this.useTrayIcon_checkbox);
             this.Controls.Add(this.opacitySettingPercentage_label);
             this.Controls.Add(this.opacitySettingValue_label);
             this.Controls.Add(this.OpacitySetting_label);
@@ -215,6 +231,7 @@
         private System.Windows.Forms.Label opacitySettingValue_label;
         private System.Windows.Forms.Label OpacitySetting_label;
         private System.Windows.Forms.TrackBar opacitySetting_trackbar;
+        private System.Windows.Forms.CheckBox useTrayIcon_checkbox;
     }
 }
 

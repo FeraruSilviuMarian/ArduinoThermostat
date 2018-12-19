@@ -70,5 +70,17 @@ namespace ArduinoThermostat.Properties {
                 this["settingsFormLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showInTray {
+            get {
+                return ((bool)(this["showInTray"]));
+            }
+            set {
+                this["showInTray"] = value;
+            }
+        }
     }
 }
