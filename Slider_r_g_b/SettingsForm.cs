@@ -85,7 +85,7 @@ namespace ArduinoThermostat
             Properties.Settings.Default.Save();
         }
 
-        public void UseTrayIcon_Checkbox_CheckedChanged(object sender, EventArgs e)
+        private void UseTrayIcon_Checkbox_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.showInTray = useTrayIcon_checkbox.Checked;
 
