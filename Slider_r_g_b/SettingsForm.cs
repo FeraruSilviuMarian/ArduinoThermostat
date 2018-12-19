@@ -31,6 +31,11 @@ namespace ArduinoThermostat
             Init_Form();
         }
 
+        private void MainForm_ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
         private void Init_Form()
         {
             start_temperature_setting_trackbar.Value = Properties.Settings.Default.TemperatureStartTarget;
@@ -88,11 +93,6 @@ namespace ArduinoThermostat
         private void UseTrayIcon_Checkbox_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.showInTray = useTrayIcon_checkbox.Checked;
-
-            // TODO show or hide system tray immediately
-            //mainFormRef.notifyIcon.Visible = useTrayIcon_checkbox.Checked; // TODO make action happen right away
-            
-
             Properties.Settings.Default.Save();
         }
     }
