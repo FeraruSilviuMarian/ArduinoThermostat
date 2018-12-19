@@ -89,7 +89,9 @@ namespace ArduinoThermostat
         {
             Properties.Settings.Default.showInTray = useTrayIcon_checkbox.Checked;
 
+            // TODO show or hide system tray immediately
             //mainFormRef.notifyIcon.Visible = useTrayIcon_checkbox.Checked; // TODO make action happen right away
+            
 
             Properties.Settings.Default.Save();
         }

@@ -231,7 +231,7 @@
         private System.Windows.Forms.Label opacitySettingValue_label;
         private System.Windows.Forms.Label OpacitySetting_label;
         private System.Windows.Forms.TrackBar opacitySetting_trackbar;
-        private System.Windows.Forms.CheckBox useTrayIcon_checkbox;
+        public System.Windows.Forms.CheckBox useTrayIcon_checkbox;
     }
 }
 
