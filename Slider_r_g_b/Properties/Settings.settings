@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="TemperatureStartTarget" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">21</Value>
     </Setting>
     <Setting Name="MainFormOpacity" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>

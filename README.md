@@ -9,5 +9,5 @@
 - Keep your arduino plugged in the any usb ports.
 
 ***Windows set up***
-- Clone and build the application in visual studio. (for now until I deploy the application).
+- Run setup.exe
 - Start the application, the application should automatically connect to the arduino and start working.

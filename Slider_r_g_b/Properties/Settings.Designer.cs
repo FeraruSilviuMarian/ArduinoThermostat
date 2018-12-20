@@ -25,7 +25,7 @@ namespace ArduinoThermostat.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("21")]
         public int TemperatureStartTarget {
             get {
                 return ((int)(this["TemperatureStartTarget"]));

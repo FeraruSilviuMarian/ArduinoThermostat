@@ -141,6 +141,7 @@ namespace ArduinoThermostat
             if (this.Visible)
             {
                 this.Hide();
+                settingsWindow.Hide();
             }
             else
             {
