@@ -17,6 +17,10 @@ namespace ArduinoThermostat
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// An arduino thermostat application, see https://github.com/FeraruSilviuMarian/ArduinoThermostat
+        /// </summary>
+
         int mainFormLocationX;
         int mainFormLocationY;
 
@@ -73,16 +77,14 @@ namespace ArduinoThermostat
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
         private IntPtr thisWindow;
 
-        // contextmenu
+        // system tray contextmenu
         private System.Windows.Forms.ContextMenu trayContextMenu;
         private System.Windows.Forms.MenuItem trayMenuItem_Exit;
         private System.Windows.Forms.MenuItem trayMenuItem_Settings;
         private System.Windows.Forms.MenuItem trayMenuItem_ShowHide;
 
-        /// <summary>
-        /// An arduino thermostat application 
-        /// </summary>
         #region Constructor
+        
 
         public MainForm()
         {
