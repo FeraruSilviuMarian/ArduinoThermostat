@@ -9,5 +9,5 @@
 - Keep your arduino plugged in the any usb ports.
 
 ***Windows set up***
-- Run setup.exe
+- Run setup.exe from "Install Arduino Thermostat" folder.
 - Start the application, the application should automatically connect to the arduino and start working.
